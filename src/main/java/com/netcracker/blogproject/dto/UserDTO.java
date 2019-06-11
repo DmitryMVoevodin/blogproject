@@ -1,55 +1,29 @@
-package com.netcracker.blogproject.entities;
+package com.netcracker.blogproject.dto;
 
-import javax.persistence.*;
-import java.util.Objects;
+public class UserDTO {
 
-@Entity
-@Table(name = "users")
-public class User {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Integer userId;
-
-    @Column(name = "last_name", nullable = false)
     private String userLastName;
-
-    @Column(name = "first_name", nullable = false)
     private String userFirstName;
-
-    @Column(name = "middle_name", nullable = false)
     private String userMiddleName;
-
-    @Column(name = "mail", nullable = false)
     private String userMail;
-
-    @Column(name = "phone", nullable = false)
     private String userPhone;
-
-    @Column(name = "login", nullable = false)
     private String userLogin;
-
-    @Column(name = "password", nullable = false)
     private String userPassword;
-
-    @Column(name = "nickname", nullable = false)
     private String userNickName;
-
-    @Column(name = "admin", nullable = false)
     private Boolean userAdmin;
-
-    @Column(name = "status_of_activity", nullable = false)
     private Boolean userStatusOfActivity;
 
-    public User() {}
+    public UserDTO() {}
 
-    public User(
+    public UserDTO(
+            Integer userId,
             String userLastName, String userFirstName, String userMiddleName,
             String userMail, String userPhone,
             String userLogin, String userPassword, String userNickName,
             Boolean userAdmin, Boolean userStatusOfActivity
     ) {
+        this.userId = userId;
         this.userLastName = userLastName;
         this.userFirstName = userFirstName;
         this.userMiddleName = userMiddleName;
@@ -149,51 +123,4 @@ public class User {
     public void setUserStatusOfActivity(Boolean userStatusOfActivity) {
         this.userStatusOfActivity = userStatusOfActivity;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof User)) return false;
-        User user = (User) o;
-        return Objects.equals(userId, user.userId) &&
-                Objects.equals(userLastName, user.userLastName) &&
-                Objects.equals(userFirstName, user.userFirstName) &&
-                Objects.equals(userMiddleName, user.userMiddleName) &&
-                Objects.equals(userMail, user.userMail) &&
-                Objects.equals(userPhone, user.userPhone) &&
-                Objects.equals(userLogin, user.userLogin) &&
-                Objects.equals(userPassword, user.userPassword) &&
-                Objects.equals(userNickName, user.userNickName) &&
-                Objects.equals(userAdmin, user.userAdmin) &&
-                Objects.equals(userStatusOfActivity, user.userStatusOfActivity);
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(
-                userId,
-                userLastName, userFirstName, userMiddleName,
-                userMail, userPhone,
-                userLogin, userPassword, userNickName,
-                userAdmin, userStatusOfActivity);
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "userId=" + userId +
-                ", userLastName='" + userLastName + '\'' +
-                ", userFirstName='" + userFirstName + '\'' +
-                ", userMiddleName='" + userMiddleName + '\'' +
-                ", userMail='" + userMail + '\'' +
-                ", userPhone='" + userPhone + '\'' +
-                ", userLogin='" + userLogin + '\'' +
-                ", userPassword='" + userPassword + '\'' +
-                ", userNickName='" + userNickName + '\'' +
-                ", userAdmin=" + userAdmin +
-                ", userStatusOfActivity=" + userStatusOfActivity +
-                '}';
-    }
-
 }

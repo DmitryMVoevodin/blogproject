@@ -1,7 +1,7 @@
 package com.netcracker.blogproject.entities;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "topics")
@@ -9,32 +9,33 @@ public class Topic {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "tid")
+    @Column(name = "id")
     private Integer topicId;
 
-    @Column(name = "ttitle", nullable = false)
-    private String topicTitle;
-
-    @Column(name = "tcomment", nullable = false)
-    private String topicComment;
-
     @ManyToOne
-    @JoinColumn(name = "tcreatorid")
+    @JoinColumn(name = "creator_id")
     private User topicCreator;
 
-    /*@OneToMany(targetEntity = Article.class, mappedBy = "articleTopic", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Article> articles;*/
+    @Column(name = "title", nullable = false)
+    private String topicTitle;
+
+    @Column(name = "comment", nullable = false)
+    private String topicComment;
 
     public Topic() {}
 
-    public Topic(String topicTitle, String topicComment, User topicCreator) {
+    public Topic(User topicCreator, String topicTitle, String topicComment) {
+        this.topicCreator = topicCreator;
         this.topicTitle = topicTitle;
         this.topicComment = topicComment;
-        this.topicCreator = topicCreator;
     }
 
     public Integer getTopicId() {
         return topicId;
+    }
+
+    public User getTopicCreator() {
+        return topicCreator;
     }
 
     public String getTopicTitle() {
@@ -45,16 +46,12 @@ public class Topic {
         return topicComment;
     }
 
-    public User getTopicCreator() {
-        return topicCreator;
-    }
-
-    /*public List<Article> getArticles() {
-        return articles;
-    }*/
-
     public void setTopicId(Integer topicId) {
         this.topicId = topicId;
+    }
+
+    public void setTopicCreator(User topicCreator) {
+        this.topicCreator = topicCreator;
     }
 
     public void setTopicTitle(String topicTitle) {
@@ -65,43 +62,30 @@ public class Topic {
         this.topicComment = topicComment;
     }
 
-    public void setTopicCreator(User topicCreator) {
-        this.topicCreator = topicCreator;
-    }
-
-    /*public void setArticles(List<Article> articles) {
-        this.articles = articles;
-    }*/
-
     @Override
-    public boolean equals(Object obj) {
-        if(this == obj) return true;
-        if(obj == null) return false;
-        if(!(obj instanceof Topic)) return false;
-        Topic obj1 = (Topic) obj;
-        return ((this.topicId == obj1.topicId) &&
-                (this.topicTitle.equals(obj1.topicTitle)) &&
-                (this.topicComment.equals(obj1.topicComment)) &&
-                (this.topicCreator.equals(obj1.topicCreator)));
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Topic)) return false;
+        Topic topic = (Topic) o;
+        return Objects.equals(topicId, topic.topicId) &&
+                Objects.equals(topicCreator, topic.topicCreator) &&
+                Objects.equals(topicTitle, topic.topicTitle) &&
+                Objects.equals(topicComment, topic.topicComment);
     }
 
     @Override
     public int hashCode() {
-        int result = 17;
-        result = 31 * result + topicId;
-        result = 31 * result + topicTitle.hashCode();
-        result = 31 * result + topicComment.hashCode();
-        result = 31 * result + topicCreator.hashCode();
-        return result;
+        return Objects.hash(topicId, topicCreator, topicTitle, topicComment);
     }
 
     @Override
     public String toString() {
-        return ("Topic #" + topicId +
-                "{title: " + topicTitle +
-                "; comment: " + topicComment +
-                "; author: " + topicCreator + "}"
-        );
+        return "Topic{" +
+                "topicId=" + topicId +
+                ", topicCreator=" + topicCreator +
+                ", topicTitle='" + topicTitle + '\'' +
+                ", topicComment='" + topicComment + '\'' +
+                '}';
     }
 
 }
