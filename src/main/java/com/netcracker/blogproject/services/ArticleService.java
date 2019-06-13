@@ -55,29 +55,44 @@ public class ArticleService {
         }
     }
 
-    public void editArticleById(int topicId, int articleId, Article article) {
+    public boolean editArticleById(int topicId, int articleId, Article article) {
         if (topicRepository.existsById(topicId) && articleRepository.existsById(article.getArticleId())) {
             if (topicRepository.findById(topicId).get().equals(article.getArticleTopic()) &&
                     article.getArticleId() == articleId) {
                 articleRepository.save(article);
+                return true;
+            } else {
+                return false;
             }
+        } else {
+            return false;
         }
     }
 
-    public void deleteAllArticles(int topicId) {
+    public boolean deleteAllArticles(int topicId) {
         Iterable<Article> allArticles = articleRepository.findAll();
         for (Article article : allArticles) {
             if (article.getArticleTopic().getTopicId() == topicId) {
                 articleRepository.deleteById(article.getArticleId());
             }
         }
+        if (articleRepository.count() > 0) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
-    public void deleteArticleById(int topicId, int articleId) {
+    public boolean deleteArticleById(int topicId, int articleId) {
         if (articleRepository.existsById(articleId)) {
             if (articleRepository.findById(articleId).get().getArticleTopic().getTopicId() == topicId) {
                 articleRepository.deleteById(articleId);
+                return true;
+            } else {
+                return false;
             }
+        } else {
+            return false;
         }
     }
 

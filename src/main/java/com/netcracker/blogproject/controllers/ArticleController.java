@@ -46,19 +46,19 @@ public class ArticleController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/article/{articleId}")
-    public void editArticleById(@PathVariable int topicId, @PathVariable int articleId, @RequestBody ArticleDTO articleDTO) {
+    public boolean editArticleById(@PathVariable int topicId, @PathVariable int articleId, @RequestBody ArticleDTO articleDTO) {
         Article article = articleMapper.articleDTOtoArticle(articleDTO);
-        articleService.editArticleById(topicId, articleId, article);
+        return articleService.editArticleById(topicId, articleId, article);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "")
-    public void deleteAllArticles(@PathVariable int topicId) {
-        articleService.deleteAllArticles(topicId);
+    public boolean deleteAllArticles(@PathVariable int topicId) {
+        return articleService.deleteAllArticles(topicId);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/article/{articleId}")
-    public void deleteArticleById(@PathVariable int topicId, @PathVariable int articleId) {
-        articleService.deleteArticleById(topicId, articleId);
+    public boolean deleteArticleById(@PathVariable int topicId, @PathVariable int articleId) {
+        return articleService.deleteArticleById(topicId, articleId);
     }
 
 }
