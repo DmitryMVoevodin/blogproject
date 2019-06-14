@@ -1,8 +1,6 @@
 package com.netcracker.blogproject.services;
 
-import com.netcracker.blogproject.entities.Topic;
 import com.netcracker.blogproject.entities.TopicAdmin;
-import com.netcracker.blogproject.repositories.ArticleRepository;
 import com.netcracker.blogproject.repositories.TopicAdminRepository;
 import com.netcracker.blogproject.repositories.TopicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class TopicService {
+public class TopicAdminService {
 
     @Autowired
     private TopicRepository topicRepository;
@@ -22,19 +20,10 @@ public class TopicService {
     @Autowired
     private TopicRepository userRepository;
 
-    public List<Topic> getAllTopics() {
-        Iterable<Topic> allTopics = null;
-        allTopics = topicRepository.findAll();
-        return (List<Topic>) allTopics;
+    public List<TopicAdmin> getAllTopics() {
+        Iterable<TopicAdmin> allTopics = null;
+        allTopics = topicAdminRepository.findAll();
+        return (List<TopicAdmin>) allTopics;
     }
 
-
-    public boolean addTopicToQueue(TopicAdmin topic) {
-        if (!topicAdminRepository.existsById(topic.getTopicId())) {
-            topicAdminRepository.save(topic);
-            return true;
-        } else {
-            return false;
-        }
-    }
 }
