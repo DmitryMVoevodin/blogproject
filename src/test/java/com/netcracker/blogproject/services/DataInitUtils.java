@@ -6,8 +6,9 @@ import com.netcracker.blogproject.entities.User;
 
 import java.util.List;
 
-public class DataInit {
+public class DataInitUtils {
 
+    //todo создать раздельные сущности для функций и непортить объект
     static void insertIntoList(List<User> users, List<Topic> topics, List<Article> articles) {
         User user;
         user = new User(

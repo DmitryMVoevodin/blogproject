@@ -52,7 +52,7 @@ public class ArticleServiceTest {
         topics = new ArrayList<>();
         articles = new ArrayList<>();
 
-        DataInit.insertIntoList(users, topics, articles);
+        DataInitUtils.insertIntoList(users, topics, articles);
 
     }
 
@@ -71,7 +71,7 @@ public class ArticleServiceTest {
         }
         assertEquals(articlesExpected, articleService.getAllArticles(topicId));
 
-        verify(articleRepository, times(1)).findAll();
+        verify(articleRepository).findAll();
 
     }
 
