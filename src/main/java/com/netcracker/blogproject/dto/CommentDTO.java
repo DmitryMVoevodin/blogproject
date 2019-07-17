@@ -1,11 +1,18 @@
 package com.netcracker.blogproject.dto;
 
+import io.swagger.annotations.ApiModelProperty;
+
 public class CommentDTO {
 
+    @ApiModelProperty(notes = "Comment's identification number")
     private Integer commentId;
+    @ApiModelProperty(notes = "Article's identification number (the comment was added to this article)")
     private Integer commentArticleId;
+    @ApiModelProperty(notes = "Commentator's identification number (the comment was added by this user)")
     private Integer commentUserId;
+    @ApiModelProperty(notes = "Nickname of the author of this comment")
     private String commentUserNickName;
+    @ApiModelProperty(notes = "Text (the content) of this comment")
     private String commentContent;
 
     public CommentDTO() {}

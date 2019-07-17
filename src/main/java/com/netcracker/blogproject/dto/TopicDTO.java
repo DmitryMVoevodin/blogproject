@@ -1,10 +1,16 @@
 package com.netcracker.blogproject.dto;
 
+import io.swagger.annotations.ApiModelProperty;
+
 public class TopicDTO {
 
+    @ApiModelProperty(notes = "Topic's identification number")
     private Integer topicId;
+    @ApiModelProperty(notes = "User that is the creator of this topic")
     private UserDTO topicCreator;
+    @ApiModelProperty(notes = "Title of this topic")
     private String topicTitle;
+    @ApiModelProperty(notes = "Annotation (brief description) of this topic")
     private String topicComment;
 
     public TopicDTO() {}

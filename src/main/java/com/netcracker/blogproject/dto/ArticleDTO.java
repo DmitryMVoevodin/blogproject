@@ -1,13 +1,22 @@
 package com.netcracker.blogproject.dto;
 
+import io.swagger.annotations.ApiModelProperty;
+
 public class ArticleDTO {
 
+    @ApiModelProperty(notes = "Article's identification number")
     private Integer articleId;
+    @ApiModelProperty(notes = "Topic that belongs to this article")
     private TopicDTO articleTopic;
+    @ApiModelProperty(notes = "User that is the creator of this article")
     private UserDTO articleCreator;
+    @ApiModelProperty(notes = "Rights (in the form like rwcrwcrwc) that belong to this article")
     private String articleRights;
+    @ApiModelProperty(notes = "Title of this article")
     private String articleTitle;
+    @ApiModelProperty(notes = "Annotation (brief description) of this article")
     private String articleComment;
+    @ApiModelProperty(notes = "Text(content) of this article")
     private String articleContent;
 
     public ArticleDTO() {}

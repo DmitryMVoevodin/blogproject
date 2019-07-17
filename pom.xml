@@ -20,6 +20,7 @@
         <org.mapstruct.version>1.3.0.Final</org.mapstruct.version>
         <org.mockito>1.10.19</org.mockito>
         <junit.version>4.12</junit.version>
+        <io.springfox>2.9.2</io.springfox>
     </properties>
 
     <dependencies>
@@ -68,6 +69,17 @@
             <artifactId>mockito-all</artifactId>
             <version>${org.mockito}</version>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${io.springfox}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${io.springfox}</version>
         </dependency>
 
 

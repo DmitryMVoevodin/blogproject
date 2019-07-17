@@ -1,17 +1,30 @@
 package com.netcracker.blogproject.dto;
 
+import io.swagger.annotations.ApiModelProperty;
+
 public class UserDTO {
 
+    @ApiModelProperty(notes = "User's identification number")
     private Integer userId;
+    @ApiModelProperty(notes = "Last name of this user")
     private String userLastName;
+    @ApiModelProperty(notes = "First name of this user")
     private String userFirstName;
+    @ApiModelProperty(notes = "Middle name of this user")
     private String userMiddleName;
+    @ApiModelProperty(notes = "Email of this user")
     private String userMail;
+    @ApiModelProperty(notes = "Phone number of this user")
     private String userPhone;
+    @ApiModelProperty(notes = "Login of this user")
     private String userLogin;
+    @ApiModelProperty(notes = "Password of this user")
     private String userPassword;
+    @ApiModelProperty(notes = "Nickname of this user")
     private String userNickName;
+    @ApiModelProperty(notes = "Does this user have the admin-status?")
     private Boolean userAdmin;
+    @ApiModelProperty(notes = "Additional information for further project development")
     private Boolean userStatusOfActivity;
 
     public UserDTO() {}
