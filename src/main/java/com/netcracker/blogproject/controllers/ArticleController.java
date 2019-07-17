@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/topic/{topicId}")
 public class ArticleController {
@@ -21,8 +22,9 @@ public class ArticleController {
     private ArticleService articleService;
 
     @RequestMapping(method = RequestMethod.GET, value = "")
-    public List<ArticleDTO> getAllArticles(@PathVariable int topicId) {
-        List<Article> articleList = articleService.getAllArticles(topicId);
+    public List<ArticleDTO> getAllArticles(@PathVariable int topicId, int userId) {
+        if(userId == 0 || topicId == 0) return null;
+        List<Article> articleList = articleService.getAllArticles(topicId, userId);
         if(articleList.isEmpty()) {
             return null;
         } else {
@@ -35,20 +37,28 @@ public class ArticleController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/article/{articleId}")
-    public ArticleDTO getArticleById(@PathVariable int topicId, @PathVariable int articleId) {
-        return articleMapper.articleToArticleDTO(articleService.getArticleById(topicId, articleId));
+    public ArticleDTO getArticleById(@PathVariable int topicId, @PathVariable int articleId, int userId) {
+        if(userId == 0 || topicId == 0 || articleId == 0) return null;
+        return articleMapper.articleToArticleDTO(articleService.getArticleById(topicId, articleId, userId));
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "")
-    public boolean addArticle(@PathVariable int topicId, @RequestBody ArticleDTO articleDTO) {
+    public int addArticle(@PathVariable int topicId, @RequestBody ArticleDTO articleDTO) {
         Article article = articleMapper.articleDTOtoArticle(articleDTO);
         return articleService.addArticle(topicId, article);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/article/{articleId}")
-    public boolean editArticleById(@PathVariable int topicId, @PathVariable int articleId, @RequestBody ArticleDTO articleDTO) {
+    public boolean editArticleById(@PathVariable int topicId, @PathVariable int articleId, @RequestBody ArticleDTO articleDTO, int userId) {
+        if(topicId == 0 || articleId == 0 || userId == 0) return false;
         Article article = articleMapper.articleDTOtoArticle(articleDTO);
-        return articleService.editArticleById(topicId, articleId, article);
+        return articleService.editArticleById(topicId, articleId, article, userId);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/article/{articleId}/availability")
+    public boolean isEditingAvailableForArticle(@PathVariable int topicId, @PathVariable int articleId, @RequestBody int userId) {
+        if(topicId == 0 || articleId == 0 || userId == 0) return false;
+        return articleService.isEditingAvailableForArticle(articleId, userId);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "")
@@ -57,8 +67,9 @@ public class ArticleController {
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/article/{articleId}")
-    public boolean deleteArticleById(@PathVariable int topicId, @PathVariable int articleId) {
-        return articleService.deleteArticleById(topicId, articleId);
+    public boolean deleteArticleById(@PathVariable int topicId, @PathVariable int articleId, int userId) {
+        if(topicId == 0 || articleId == 0 || userId == 0) return false;
+        return articleService.deleteArticleById(topicId, articleId, userId);
     }
 
 }

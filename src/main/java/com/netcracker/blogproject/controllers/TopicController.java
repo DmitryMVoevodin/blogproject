@@ -7,14 +7,12 @@ import com.netcracker.blogproject.entities.TopicAdmin;
 import com.netcracker.blogproject.services.TopicService;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/topic")
 public class TopicController {
@@ -38,10 +36,16 @@ public class TopicController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "")
+    @RequestMapping(method = RequestMethod.POST, value = "/adding")
     public boolean addTopicToQueue(@RequestBody TopicDTO topicDTO) {
         TopicAdmin topic = topicMapper.topicDTOtoTopicAdmin(topicDTO);
         return topicService.addTopicToQueue(topic);
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{topicId}/delete")
+    public boolean deleteTopicById(@PathVariable int topicId, int userId) {
+        if(topicId == 0 || userId == 0) return false;
+        return topicService.deleteTopicById(topicId, userId);
     }
 
 }

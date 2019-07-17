@@ -25,9 +25,25 @@ public class UserService {
         return null;
     }
 
-    public List<User> getAllUsers() {
+    public List<User> getAllUsers(int userId) {
         List<User> users = null;
         users = (List<User>) userRepository.findAll();
+        if(userRepository.existsById(userId)) {
+            User user = userRepository.findById(userId).get();
+            if(!user.getUserAdmin()) {
+                for(User account: users) {
+                    account.setUserLastName("");
+                    account.setUserFirstName("");
+                    account.setUserMiddleName("");
+                    account.setUserMail("");
+                    account.setUserPhone("");
+                    account.setUserLogin("");
+                    account.setUserPassword("");
+                }
+            }
+        } else {
+            users = null;
+        }
         return users;
     }
 
@@ -52,6 +68,27 @@ public class UserService {
             return null;
         }
         return null;
+    }
+
+    public boolean deleteUserById(int accountId, int userId) {
+        if(userRepository.existsById(userId)) {
+            if(!userRepository.findById(userId).get().getUserAdmin()) {
+                return false;
+            }
+        } else {
+            return false;
+        }
+        if(userRepository.existsById(accountId)) {
+            if(userRepository.findById(accountId).get().getUserId() == accountId &&
+                    (!userRepository.findById(accountId).get().getUserAdmin())) {
+                userRepository.deleteById(accountId);
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 
 }

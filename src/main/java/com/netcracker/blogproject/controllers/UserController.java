@@ -27,8 +27,9 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "")
-    public List<UserDTO> getAllUsers() {
-        List<User> userList = userService.getAllUsers();
+    public List<UserDTO> getAllUsers(int userId) {
+        if (userId == 0) return null;
+        List<User> userList = userService.getAllUsers(userId);
         if(userList.isEmpty()) {
             return null;
         } else {
@@ -38,6 +39,12 @@ public class UserController {
             }
             return userDTOList;
         }
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{accountId}/delete")
+    public boolean deleteUserById(@PathVariable int accountId, int userId) {
+        if(accountId == 0 || userId == 0) return false;
+        return userService.deleteUserById(accountId, userId);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "")

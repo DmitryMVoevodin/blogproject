@@ -60,6 +60,7 @@ public class ArticleServiceTest {
     public void getAllArticlesTest() {
 
         int topicId = 2;
+        int userId = 2;
 
         when(articleRepository.findAll()).thenReturn(articles);
 
@@ -69,7 +70,7 @@ public class ArticleServiceTest {
                 articlesExpected.add(article);
             }
         }
-        assertEquals(articlesExpected, articleService.getAllArticles(topicId));
+        assertEquals(articlesExpected, articleService.getAllArticles(topicId, userId));
 
         verify(articleRepository).findAll();
 
@@ -80,10 +81,11 @@ public class ArticleServiceTest {
 
         int topicId = 4;
         int articleId = 4;
+        int userId = 3;
 
         when(articleRepository.findById(4)).thenReturn(Optional.ofNullable(articles.get(articleId - 1)));
 
-        assertEquals(articles.get(articleId - 1), articleService.getArticleById(topicId, articleId));
+        assertEquals(articles.get(articleId - 1), articleService.getArticleById(topicId, articleId, userId));
 
         verify(articleRepository, times(1)).findById(articleId);
 
@@ -117,7 +119,7 @@ public class ArticleServiceTest {
         when(topicRepository.findById(topicId)).thenReturn(Optional.ofNullable(topics.get(topicId - 1)));
         when(articleRepository.save(article)).thenReturn(article);
 
-        assertTrue(articleService.addArticle(topicId, article));
+        assertTrue(articleService.addArticle(topicId, article) > 0);
 
         verify(topicRepository, times(1)).existsById(topicId);
         verify(articleRepository, times(1)).existsById(articleId);
@@ -154,7 +156,7 @@ public class ArticleServiceTest {
         when(topicRepository.findById(topicId)).thenReturn(Optional.ofNullable(topics.get(topicId - 1)));
         when(articleRepository.save(article)).thenReturn(article);
 
-        assertTrue(articleService.editArticleById(topicId, articleId, article));
+        assertTrue(articleService.editArticleById(topicId, articleId, article, userId));
 
         verify(topicRepository, times(1)).existsById(topicId);
         verify(articleRepository, times(1)).existsById(article.getArticleId());
@@ -190,11 +192,12 @@ public class ArticleServiceTest {
 
         int topicId = 2;
         int articleId = 2;
+        int userId = 2;
 
         when(articleRepository.existsById(articleId)).thenReturn(true);
         when(articleRepository.findById(articleId)).thenReturn(Optional.ofNullable(articles.get(articleId - 1)));
 
-        assertTrue(articleService.deleteArticleById(topicId, articleId));
+        assertTrue(articleService.deleteArticleById(topicId, articleId, userId));
 
         verify(articleRepository, times(1)).existsById(articleId);
         verify(articleRepository, times(1)).findById(articleId);

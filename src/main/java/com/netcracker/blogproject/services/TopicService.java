@@ -37,4 +37,17 @@ public class TopicService {
             return false;
         }
     }
+
+    public boolean deleteTopicById(int topicId, int userId) {
+        if(topicRepository.existsById(topicId)) {
+            if(topicRepository.findById(topicId).get().getTopicCreator().getUserId() == userId) {
+                topicRepository.deleteById(topicId);
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
 }
